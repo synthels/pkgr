@@ -43,8 +43,12 @@ def from_ftp(package, clone_at):
     # We assume (WLOG) that the file is a tarball!
     tar = tarfile.open(f"{cloned_at}.tar.gz", "r:gz")
     tar.extractall(path=clone_at)
+    extracted = os.path.commonprefix(tar.getnames())
     tar.close()
+
+    # Remove tar file and rename extracted archive to package name!
     os.remove(f"{cloned_at}.tar.gz")
+    os.rename(f"{clone_at}/{extracted}", f"{clone_at}/{package['name']}")
 
 
 def get_source(package, opt):
