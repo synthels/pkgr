@@ -15,17 +15,18 @@ $ cd xpkg
 $ python3 -m pip install -r requirements.txt
 ```
 
-## Usage
+## Basic usage
 
 `xpkg` works by parsing a simple YAML file (named `packages.yml`), where you describe your packages and their dependencies. The skeleton of this file consists of:
 
 ```yaml
 build:
-  sysroot: "sysroot"
-  working-dir: ".xpkg"
+    sysroot: "sysroot" # System root
+    working-dir: "working_dir" # Build working directory
+    prefix: "prefix" # Binary prefix
 
-packages:
-  # Packages go here
+    packages:
+        # Packages go here
 ```
 
 Under `packages`, you may list any number of packages you want to install, like this:
@@ -37,8 +38,10 @@ Under `packages`, you may list any number of packages you want to install, like 
     ftp: 'https://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz' # ftp url (if the source is hosted on some random server on the internet)
     tag: 'binutils-2_32' # Git tag (applies only if source is hosted on git)
     dependencies: # Packages which need to be built before this package
-        - autoconf
-        - automake
+        - package1
+        - package2
+    build:
+        # Build options (see USAGE.md)
 ```
 
 The subcommands are as follows:

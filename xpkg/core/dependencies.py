@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 """
 Copyright (c) 2022 synthels
 See the file 'LICENSE' for copying permission
@@ -32,7 +31,8 @@ class DependencyGraph:
                     # Unknown dependency
                     if dep not in self.packages:
                         log.error(
-                            f"Unknown package {dep}! (as dependency of {package['name']})")
+                            f"Unknown package {dep}! (as dependency of {package['name']})"
+                        )
                         exit(1)
                     # Self dependence
                     if package["name"] == dep:
@@ -43,7 +43,8 @@ class DependencyGraph:
         """Resolve single package"""
         for name, dep in self.packages.items():
             if "dependencies" in package:
-                if (name in package["dependencies"]) and (not name in self.already_resolved):
+                if (name in package["dependencies"]) and (
+                        not name in self.already_resolved):
                     self.resolve_single(dep)
                     self.path.append(dep)
                     self.already_resolved.append(name)

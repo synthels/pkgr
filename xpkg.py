@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 """
 Usage:
   xpkg build
@@ -13,6 +12,8 @@ import os
 import shutil
 
 import yaml
+import pathlib
+
 from docopt import docopt
 
 from xpkg.core import install, log
@@ -21,20 +22,24 @@ __version__ = "0.1.0"
 
 requirements = ["git", "make"]
 
+
 def require(req):
     """Require that binary exists before continuing"""
     for r in req:
         if shutil.which(r) == None:
             log.error(
-                f"{r}, which is required for distro to work, was not found in the PATH.")
+                f"{r}, which is required for distro to work, was not found in the PATH."
+            )
 
 
 def get_build_options(yml):
     """Get build options from config"""
-    build_options = {"sysroot": "sysroot", "working-dir": ".xpkg"}
+    build_options = {"sysroot": "sysroot", "working-dir": ".xpkg", "prefix": "bin"}
     for key, val in yml.items():
         if key == "build":
             for opt, v in val.items():
+                if opt == "prefix":
+                    v = str(pathlib.Path(v).absolute())
                 build_options[opt] = v
     return build_options
 
@@ -49,7 +54,7 @@ def configure_working_directory(opt):
 
 def main():
     args = docopt(__doc__)
-    log.info(f"xpkg version {__version__}")
+    log.bold(f"xpkg version {__version__}")
     try:
         with open("packages.yml", "r") as f:
             try:

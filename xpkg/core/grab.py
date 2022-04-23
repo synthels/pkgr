@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 """
 Copyright (c) 2022 synthels
 See the file 'LICENSE' for copying permission
@@ -16,12 +15,14 @@ from . import log
 def from_git(package, clone_at):
     """Grab source from git repository"""
     if "tag" in package:
-        repo = ("--depth", "1", "--branch",
-                f"{package['tag']}", f"{package['git']}")
+        repo = ("--depth", "1", "--branch", f"{package['tag']}",
+                f"{package['git']}")
     else:
         repo = ("--depth", "1", package["git"])
-    p = subprocess.run(["git", "clone", *repo, f"{clone_at}/{package['name']}"],
-                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    p = subprocess.run(
+        ["git", "clone", *repo, f"{clone_at}/{package['name']}"],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL)
 
     # Did we actually clone anything?
     if p.returncode != 0:
@@ -37,8 +38,7 @@ def from_ftp(package, clone_at):
     cloned_at = f"{clone_at}/{package['name']}"
     if not os.path.isdir(clone_at):
         os.makedirs(clone_at)
-    urllib.request.urlretrieve(
-        package["ftp"], f"{cloned_at}.tar.gz")
+    urllib.request.urlretrieve(package["ftp"], f"{cloned_at}.tar.gz")
 
     # We assume (WLOG) that the file is a tarball!
     tar = tarfile.open(f"{cloned_at}.tar.gz", "r:gz")
