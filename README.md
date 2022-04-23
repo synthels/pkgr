@@ -24,6 +24,7 @@ build:
     sysroot: "sysroot" # System root
     working-dir: "working_dir" # Build working directory
     prefix: "prefix" # Binary prefix
+    patches: "patches_dir" # Directory where patches can be found
 
     packages:
         # Packages go here

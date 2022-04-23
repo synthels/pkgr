@@ -9,18 +9,21 @@ build:
     sysroot: "sysroot"
     working-dir: "working_dir"
     prefix: "prefix"
+    patches: "patches_dir"
 ```
 
-- The `sysroot` field defines the system root of the build. If you're not cross compiling, you probably wont ever need this.
-- The `working-dir` field defines the directory where all of the built packages and their sources will go.
+- The `sysroot` field specifies the system root of the build. If you're not cross compiling, you probably wont ever need this.
+- The `working-dir` field specifies the directory where all of the built packages and their sources will go.
 - The `prefix` field specifies the directory relative to `working-dir`, where the built binaries will be installed.
+- The `patches` field specifies the directory relative to `working-dir`, where patches for each package can be found. Patches are expected to be laid out under `<patches>/package_name`.
 
 The default values for these fields are as follows:
 ```py
 {
     "sysroot": "sysroot", 
     "working-dir": ".xpkg", 
-    "prefix": "bin"
+    "prefix": "bin",
+    "patches": None
 }
 ```
 

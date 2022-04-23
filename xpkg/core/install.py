@@ -9,7 +9,7 @@ import os
 import subprocess
 import urllib.request
 
-from . import grab, log, build
+from . import grab, log, build, patch
 from .dependencies import DependencyGraph
 
 
@@ -63,6 +63,8 @@ def install_packages(packages, args, opt):
 
                 cache.write(f"{package['name']}\n")
 
-        # Build packages
+        # Patch & build packages
         for package in order:
+            if opt["patches"] != None:
+                patch.patch_package(package, opt)
             build.install_package(package, opt)

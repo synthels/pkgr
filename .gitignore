@@ -155,4 +155,5 @@ cython_debug/
 
 # xpkg specific things
 *.yml
+patches
 .xpkg

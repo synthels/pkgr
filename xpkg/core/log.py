@@ -19,6 +19,11 @@ def rebuilding(name):
     )
 
 
+def patching(name):
+    """Print patching message"""
+    print(f"Patching {fg('green')}{name}{attr('reset')}...")
+
+
 def bold(msg):
     """Print bold message"""
     print(f"{attr('bold')}{msg}{attr('reset')}")

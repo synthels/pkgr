@@ -20,7 +20,7 @@ from xpkg.core import install, log
 
 __version__ = "0.1.0"
 
-requirements = ["git", "make"]
+requirements = ["git", "make", "patch"]
 
 
 def require(req):
@@ -34,11 +34,11 @@ def require(req):
 
 def get_build_options(yml):
     """Get build options from config"""
-    build_options = {"sysroot": "sysroot", "working-dir": ".xpkg", "prefix": "bin"}
+    build_options = {"sysroot": "sysroot", "working-dir": ".xpkg", "prefix": "bin", "patches": None}
     for key, val in yml.items():
         if key == "build":
             for opt, v in val.items():
-                if opt == "prefix":
+                if opt == "prefix" or opt == "patches":
                     v = str(pathlib.Path(v).absolute())
                 build_options[opt] = v
     return build_options
