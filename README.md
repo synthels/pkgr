@@ -11,8 +11,11 @@ $ git clone https://github.com/synthels/xpkg.git
 # change your working directory
 $ cd xpkg
 
-# install the requirements
-$ python3 -m pip install -r requirements.txt
+# install globally
+$ python3 -m pip install .
+
+# You can then invoke xpkg anywhere!
+$ python3 -m xpkg
 ```
 
 ## Basic usage
