@@ -12,10 +12,10 @@ def installing(name):
     print(f"Installing {fg('green')}{name}{attr('reset')}...")
 
 
-def rebuilding(name):
+def skipping(name):
     """Print skipping message"""
     print(
-        f"Skipping {fg('orange_1')}{name}{attr('reset')}, as it is already installed."
+        f"Skipping {fg('orange_1')}{name}{attr('reset')}, as it is already built."
     )
 
 

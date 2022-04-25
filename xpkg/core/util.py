@@ -34,7 +34,7 @@ def parse(commands, package, opt):
 def execute_command(package, args, opt):
     """Execute command after parsing it"""
     parsed = parse(args, package, opt)
-    subprocess.call(" ".join(parsed), shell=True)
+    return subprocess.call(" ".join(parsed), shell=True)
 
 
 def get_package_directory(package, opt):

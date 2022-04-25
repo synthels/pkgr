@@ -6,6 +6,7 @@ See the file 'LICENSE' for copying permission
 
 import io
 import os
+import json
 import subprocess
 import urllib.request
 
@@ -22,6 +23,13 @@ def ordinal(n):
 def check_package(p):
     """Check package format"""
     return (("name" in p) and (("git" in p) ^ ("ftp" in p)))
+
+
+def dump_to_cache(d, cache):
+    """Dump data to cache"""
+    cache.seek(0)
+    json.dump(d, cache)
+    cache.truncate()
 
 
 def install_packages(packages, args, opt):
@@ -49,23 +57,42 @@ def install_packages(packages, args, opt):
 
     # Clone/retrieve source code for each package
     if args["build"]:
-        with open(f"{opt['working-dir']}/.xpkgcache", 'a+') as cache:
+        # Attempt to read cache
+        already_installed = {}
+        with open(f"{opt['working-dir']}/cache.json", 'a+') as cache:
             cache.seek(0)
-            already_installed = cache.read().split("\n")
-            cache.seek(0, io.SEEK_END)
+            try:
+                already_installed = json.load(cache)
+            except json.decoder.JSONDecodeError:
+                # Cache is empty
+                pass
+
+        # Try to install packages
+        # Note: we open the file again, since opening it as 'r+' at the beginning
+        # would mess things up
+        with open(f"{opt['working-dir']}/cache.json", 'r+') as cache:
             for package in order:
-                if package["name"] not in already_installed:
-                    log.installing(package['name'])
+                name = package["name"]
+                if name not in already_installed:
+                    log.installing(name)
                     grab.get_source(package, opt)
                     # Patch package
                     if opt["patches"] != None:
                         patch.patch_package(package, opt)
                 else:
-                    log.rebuilding(package['name'])
                     continue
 
-                cache.write(f"{package['name']}\n")
+                # Sync cache
+                already_installed[name] = "installed"
+                dump_to_cache(already_installed, cache)
 
-        # Build packages
-        for package in order:
-            build.install_package(package, opt)
+            # Build packages
+            for package in order:
+                name = package["name"]
+                if name in already_installed:
+                    if already_installed[name] != "built":
+                        build.install_package(package, opt)
+                        already_installed[name] = "built"
+                        dump_to_cache(already_installed, cache)
+                    else:
+                        log.skipping(name)

@@ -60,3 +60,5 @@ Usage:
 Options:
   -h --help     Show this message
 ```
+
+For more details, see [`USAGE.md`](https://github.com/synthels/xpkg/blob/master/USAGE.md).
