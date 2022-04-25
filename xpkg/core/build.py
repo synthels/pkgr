@@ -32,8 +32,7 @@ def install_package(package, opt):
                 if stage in build:
                     log.info(f"{stages[stage]} {name}...")
                     for args in build[stage]:
-                        if util.execute_command(package, args, opt) != 0:
-                            raise ValueError(f"Couldn't run {' '.join(util.parse(args, package, opt))}")
+                        util.execute_command(package, args, opt)
             # Go back to root
             os.chdir(cwd)
 
