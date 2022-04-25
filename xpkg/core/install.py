@@ -57,14 +57,15 @@ def install_packages(packages, args, opt):
                 if package["name"] not in already_installed:
                     log.installing(package['name'])
                     grab.get_source(package, opt)
+                    # Patch package
+                    if opt["patches"] != None:
+                        patch.patch_package(package, opt)
                 else:
                     log.rebuilding(package['name'])
                     continue
 
                 cache.write(f"{package['name']}\n")
 
-        # Patch & build packages
+        # Build packages
         for package in order:
-            if opt["patches"] != None:
-                patch.patch_package(package, opt)
             build.install_package(package, opt)
