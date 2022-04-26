@@ -40,3 +40,5 @@ def install_package(package, opt):
         except Exception as e:
             log.error(f"Couldn't build {name}! ({e})")
             exit(1)
+
+    return ("build" in package)

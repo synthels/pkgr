@@ -91,8 +91,8 @@ def install_packages(packages, args, opt):
                 name = package["name"]
                 if name in already_installed:
                     if already_installed[name] != "built":
-                        build.install_package(package, opt)
-                        already_installed[name] = "built"
-                        dump_to_cache(already_installed, cache)
+                        if build.install_package(package, opt):
+                            already_installed[name] = "built"
+                            dump_to_cache(already_installed, cache)
                     else:
                         log.skipping(name)
