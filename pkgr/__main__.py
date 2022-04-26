@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Usage:
-  xpkg build
-  xpkg list
+  pkgr build
+  pkgr list
 
 Options:
   -h --help     Show this message
@@ -16,7 +16,7 @@ import pathlib
 
 from docopt import docopt
 
-from xpkg.core import install, log
+from pkgr.core import install, log
 
 __version__ = "1.0.0"
 
@@ -34,7 +34,7 @@ def require(req):
 
 def get_build_options(yml):
     """Get build options from config"""
-    build_options = {"sysroot": "sysroot", "working-dir": ".xpkg", "prefix": "bin", "patches": None}
+    build_options = {"sysroot": "sysroot", "working-dir": ".pkgr", "prefix": "bin", "patches": None}
     for key, val in yml.items():
         if key == "build":
             for opt, v in val.items():
@@ -54,7 +54,7 @@ def configure_working_directory(opt):
 
 def main():
     args = docopt(__doc__)
-    log.bold(f"xpkg version {__version__}")
+    log.bold(f"pkgr version {__version__}")
     try:
         with open("packages.yml", "r") as f:
             try:

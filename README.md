@@ -1,4 +1,4 @@
-# xpkg
+# pkgr
 
 Automatically build, patch and install packages.
 
@@ -6,21 +6,21 @@ Automatically build, patch and install packages.
 
 ```bash
 # clone the repo
-$ git clone https://github.com/synthels/xpkg.git
+$ git clone https://github.com/synthels/pkgr.git
 
 # change your working directory
-$ cd xpkg
+$ cd pkgr
 
 # install globally
 $ python3 -m pip install .
 
-# You can then invoke xpkg anywhere!
-$ python3 -m xpkg
+# You can then invoke pkgr anywhere!
+$ python3 -m pkgr
 ```
 
 ## Basic usage
 
-`xpkg` works by parsing a simple YAML file (named `packages.yml`), where you describe your packages and their dependencies. The skeleton of this file consists of:
+`pkgr` works by parsing a simple YAML file (named `packages.yml`), where you describe your packages and their dependencies. The skeleton of this file consists of:
 
 ```yaml
 build:
@@ -51,14 +51,14 @@ Under `packages`, you may list any number of packages you want to install, like 
 The subcommands are as follows:
 
 ```sh
-$ python3 xpkg.py --help
+$ python3 pkgr.py --help
 
 Usage:
-  xpkg build    Build packages
-  xpkg list     List packages
+  pkgr build    Build packages
+  pkgr list     List packages
 
 Options:
   -h --help     Show this message
 ```
 
-For more details, see [`USAGE.md`](https://github.com/synthels/xpkg/blob/master/USAGE.md).
+For more details, see [`USAGE.md`](https://github.com/synthels/pkgr/blob/master/USAGE.md).

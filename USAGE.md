@@ -1,6 +1,6 @@
 # Usage
 
-A typical use case for `xpkg` is installing a bunch of packages and building them from source, all with one command. The packages are described in a file named `packages.yml`, which must always exist in the root directory where you're calling `xpkg` from.
+A typical use case for `pkgr` is installing a bunch of packages and building them from source, all with one command. The packages are described in a file named `packages.yml`, which must always exist in the root directory where you're calling `pkgr` from.
 
 The header of the file is where you specify basic build options
 
@@ -21,7 +21,7 @@ The default values for these fields are as follows:
 ```py
 {
     "sysroot": "sysroot", 
-    "working-dir": ".xpkg", 
+    "working-dir": ".pkgr", 
     "prefix": "bin",
     "patches": None
 }
@@ -73,6 +73,6 @@ build:
 In every command that is ran, you can expect that the current directory will be set to wherever the current package's source was installed. In these commands, you can also use a set of special variables prefixed with `%`, which will be replaced with their values before being ran.
 
 ### Special variables
-- `%CORES`: The number of cores that `xpkg` recommends be used with the `-j` option when running `make`.
+- `%CORES`: The number of cores that `pkgr` recommends be used with the `-j` option when running `make`.
 - `%PREFIX`: The prefix specified on the header.
 - `%SYSROOT`: The system root specified on the header.
