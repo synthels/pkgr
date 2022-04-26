@@ -29,8 +29,8 @@ build:
     prefix: "prefix" # Binary prefix
     patches: "patches_dir" # Directory where patches can be found
 
-    packages:
-        # Packages go here
+packages:
+    # Packages go here
 ```
 
 Under `packages`, you may list any number of packages you want to install, like this:
