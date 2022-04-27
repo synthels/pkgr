@@ -31,6 +31,8 @@ sysroot:
 
 In this case, the first path in the list will be treated as the sysroot (what will be returned by `%SYSROOT`, see [Special variables](#Special-variables)) and every other path will be created relative to this one.
 
+## The other header options
+
 - The `working-dir` field specifies the directory where all of the built packages and their sources will go.
 - The `prefix` field specifies the directory relative to `working-dir`, where the built binaries will be installed.
 - The `patches` field specifies the directory relative to `working-dir`, where patches for each package can be found. Patches are expected to be laid out under `<patches>/package_name`.
