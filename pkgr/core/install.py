@@ -13,6 +13,17 @@ import urllib.request
 from . import grab, log, build, patch
 from .dependencies import DependencyGraph
 
+# List of known options
+known_options = [
+    "name",
+    "git",
+    "ftp",
+    "tag",
+    "build",
+    "clone-at",
+    "dependencies"
+]
+
 
 def ordinal(n):
     """Utility to convert number to ordinal"""
@@ -22,6 +33,10 @@ def ordinal(n):
 
 def check_package(p):
     """Check package format"""
+    for opt in p.keys():
+        # Complain if option is unknown
+        if opt not in known_options:
+            return False
     return (("name" in p) and (("git" in p) ^ ("ftp" in p)))
 
 

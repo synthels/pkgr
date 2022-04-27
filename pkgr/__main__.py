@@ -20,6 +20,7 @@ from pkgr.core import install, log
 
 __version__ = "1.0.0"
 
+# Required binaries for pkgr to function
 requirements = ["git", "make", "patch"]
 
 
