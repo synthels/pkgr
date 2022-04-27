@@ -76,3 +76,4 @@ In every command that is ran, you can expect that the current directory will be 
 - `%CORES`: The number of cores that `pkgr` recommends be used with the `-j` option when running `make`.
 - `%PREFIX`: The prefix specified on the header.
 - `%SYSROOT`: The system root specified on the header.
+- `%PROJECT_SOURCE_DIR`: The directory where `pkgr` was called from.

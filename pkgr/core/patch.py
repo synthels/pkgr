@@ -17,5 +17,6 @@ def patch_package(package, opt):
         for patch in os.listdir(patches):
             cwd = os.getcwd()
             os.chdir(f"{util.get_package_directory(package, opt)}/..")
-            util.execute_command(package, ["patch", "-p0", "<", f"{patches}/{patch}"], opt)
+            util.execute_command(
+                package, ["patch", "-p0", "<", f"{patches}/{patch}"], opt)
             os.chdir(cwd)

@@ -22,7 +22,8 @@ def parse(commands, package, opt):
     variables = {
         "%CORES": str(get_cores()),
         "%PREFIX": opt["prefix"],
-        "%SYSROOT": opt["sysroot"]
+        "%SYSROOT": opt["sysroot"],
+        "%PROJECT_SOURCE_DIR": opt["project_dir"]
     }
 
     for i, c in enumerate(commands):

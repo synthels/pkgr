@@ -35,7 +35,8 @@ def require(req):
 
 def get_build_options(yml):
     """Get build options from config"""
-    build_options = {"sysroot": "sysroot", "working-dir": ".pkgr", "prefix": "bin", "patches": None}
+    build_options = {"sysroot": "sysroot", "working-dir": ".pkgr", "prefix": "bin",
+                     "patches": None, "project_dir": str(pathlib.Path(os.getcwd()).absolute())}
     for key, val in yml.items():
         if key == "build":
             for opt, v in val.items():
@@ -57,6 +58,7 @@ def configure_working_directory(opt):
         sysroot = opt["sysroot"]
         if not os.path.isdir(sysroot):
             os.mkdir(sysroot)
+
 
 def main():
     args = docopt(__doc__)
