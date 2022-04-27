@@ -44,3 +44,9 @@ def get_package_directory(package, opt):
     if "clone-at" in package:
         directory = f"{directory}/{package['clone-at']}"
     return f"{directory}/{package['name']}"
+
+
+def mkdir(path):
+    """Create directory"""
+    if not os.path.isdir(path):
+        os.makedirs(path)

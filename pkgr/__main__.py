@@ -16,7 +16,7 @@ import pathlib
 
 from docopt import docopt
 
-from pkgr.core import install, log
+from pkgr.core import install, log, util
 
 __version__ = "1.0.0"
 
@@ -33,6 +33,33 @@ def require(req):
             )
 
 
+def parse_sysroot(opt):
+    """Parse sysroot options"""
+    if opt is None:
+        log.error("No directories declared under sysroot!")
+        exit(1)
+
+    # Hack alert!
+    # We handle this separately, in order to support both the
+    # sysroot: 'str' syntax and the tree-like syntax
+    if isinstance(opt, str):
+        util.mkdir(opt)
+        return str(pathlib.Path(opt).absolute())
+
+    # Create subdirectories
+    base = str(pathlib.Path(opt[0]).absolute())
+    try:
+        util.mkdir(base)
+        for i in opt[1:]:
+            util.mkdir(os.path.join(base, i))
+        return base
+    except OSError as e:
+        log.error(f"Couldn't create sysroot! ({e})")
+        exit(1)
+
+    return base
+
+
 def get_build_options(yml):
     """Get build options from config"""
     build_options = {"sysroot": "sysroot", "working-dir": ".pkgr", "prefix": "bin",
@@ -40,24 +67,18 @@ def get_build_options(yml):
     for key, val in yml.items():
         if key == "build":
             for opt, v in val.items():
-                if opt in ["prefix", "patches", "sysroot"]:
+                if opt in ["prefix", "patches"]:
                     v = str(pathlib.Path(v).absolute())
+                # Parse sysroot options
+                elif opt == "sysroot":
+                    v = parse_sysroot(v)
                 build_options[opt] = v
     return build_options
 
 
 def configure_working_directory(opt):
     """Configure working directory"""
-    working_dir = opt["working-dir"]
-    # Create working directory
-    if not os.path.isdir(working_dir):
-        os.mkdir(working_dir)
-
-    # Create sysroot (if specified)
-    if "sysroot" in opt:
-        sysroot = opt["sysroot"]
-        if not os.path.isdir(sysroot):
-            os.mkdir(sysroot)
+    util.mkdir(opt["working-dir"])
 
 
 def main():

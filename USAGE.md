@@ -12,7 +12,25 @@ build:
     patches: "patches_dir"
 ```
 
-- The `sysroot` field specifies the system root of the build. If you're not cross compiling, you probably wont ever need this.
+## Sysroot
+
+You can specify a sysroot in two ways. One, you can just specify a directory path like this:
+
+```yaml
+sysroot: "path/to/sysroot"
+```
+
+This will work just fine and the sysroot will be created if it doesn't already exist. But, if you want to specify multiple nested subdirectories within the sysroot, you can also pass a list of paths.
+
+```yaml
+sysroot:
+    - "path/to/sysroot"
+    - "subdir1/nested-subdir1"
+    - "subdir2/nested-subdir2/nested-subdir3"
+```
+
+In this case, the first path in the list will be treated as the sysroot (what will be returned by `%SYSROOT`, see [Special variables](#Special-variables)) and every other path will be created relative to this one.
+
 - The `working-dir` field specifies the directory where all of the built packages and their sources will go.
 - The `prefix` field specifies the directory relative to `working-dir`, where the built binaries will be installed.
 - The `patches` field specifies the directory relative to `working-dir`, where patches for each package can be found. Patches are expected to be laid out under `<patches>/package_name`.
@@ -65,7 +83,7 @@ build:
         - ['some-command', 'and-arguments', 'more-arguments']
         - ['another-command', 'MORE-ARGUMENTS']
     compile:
-        - ['make']
+        - ['make', '-j%CORES']
     install:
         - ['make', 'install']
 ```
