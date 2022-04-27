@@ -52,6 +52,11 @@ def configure_working_directory(opt):
     if not os.path.isdir(working_dir):
         os.mkdir(working_dir)
 
+    # Create sysroot (if specified)
+    if "sysroot" in opt:
+        sysroot = opt["sysroot"]
+        if not os.path.isdir(sysroot):
+            os.mkdir(sysroot)
 
 def main():
     args = docopt(__doc__)
