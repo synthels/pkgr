@@ -40,7 +40,7 @@ def get_build_options(yml):
     for key, val in yml.items():
         if key == "build":
             for opt, v in val.items():
-                if opt == "prefix" or opt == "patches":
+                if opt in ["prefix", "patches", "sysroot"]:
                     v = str(pathlib.Path(v).absolute())
                 build_options[opt] = v
     return build_options
