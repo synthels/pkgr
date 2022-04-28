@@ -11,9 +11,18 @@ import subprocess
 from . import log, util
 
 
+def create_build_directory(package, opt):
+    """Create build directory for package"""
+    clone_at = ""
+    if "clone-at" in package:
+        clone_at = package["clone-at"]
+    path = os.path.join(opt["working-dir"], clone_at, "build", package["name"])
+    util.mkdir(path)
+    return str(pathlib.Path(path).absolute())
+
+
 def install_package(package, opt):
     """Compile, configure and install package"""
-    clone_at = util.get_package_directory(package, opt)
     name = package["name"]
     if "build" in package:
         build = package["build"]
@@ -27,7 +36,12 @@ def install_package(package, opt):
             # We change our directory to the directory
             # where the installed package resides
             cwd = os.getcwd()
-            os.chdir(clone_at)
+            build_dir = util.get_package_directory(package, opt)
+            if "separate" in package:
+                if package["separate"]:
+                    build_dir = create_build_directory(package, opt)
+
+            os.chdir(build_dir)
             for stage in stages:
                 if stage in build:
                     log.info(f"{stages[stage]} {name}...")

@@ -63,6 +63,7 @@ The options for each package are as follows:
 - `ftp`: If the source is hosted on an FTP server, this field specifies the URL to the source.
 - `tag`: If the `git` field was specified, this field specifies the tag which will be cloned.
 - `clone-at`: Where the source will be cloned (applies both on `git` and `ftp`).
+- `separate`: If set to `true`, the package's source and build directories will be separate
 
 ## Dependencies
 
@@ -90,10 +91,11 @@ build:
         - ['make', 'install']
 ```
 
-In every command that is ran, you can expect that the current directory will be set to wherever the current package's source was installed. In these commands, you can also use a set of special variables prefixed with `%`, which will be replaced with their values before being ran.
+In every command that is ran, you can expect that the current directory will be set to wherever the current package's source was installed (unless the `separate` option was set, in which case the current directory will be set to the package's build directory). In these commands, you can also use a set of special variables prefixed with `%`, which will be replaced with their values before being ran.
 
 ### Special variables
 - `%CORES`: The number of cores that `pkgr` recommends be used with the `-j` option when running `make`.
 - `%PREFIX`: The prefix specified on the header.
 - `%SYSROOT`: The system root specified on the header.
 - `%PROJECT_SOURCE_DIR`: The directory where `pkgr` was called from.
+- `%THIS_DIR`: Points to the current package's source directory

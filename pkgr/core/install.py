@@ -10,7 +10,7 @@ import json
 import subprocess
 import urllib.request
 
-from . import grab, log, build, patch
+from . import grab, log, build, patch, util
 from .dependencies import DependencyGraph
 
 # List of known options
@@ -21,6 +21,7 @@ known_options = [
     "tag",
     "build",
     "clone-at",
+    "separate",
     "dependencies"
 ]
 
@@ -59,6 +60,8 @@ def install_packages(packages, args, opt):
                 f"Invalid package format! (while parsing {ordinal(i + 1)} package)"
             )
             return
+        # While we're at it, we save the package's source directory
+        package["source_dir"] = util.get_package_directory(package, opt)
         packages_dict[package["name"]] = package
 
     # Get correct installation order
