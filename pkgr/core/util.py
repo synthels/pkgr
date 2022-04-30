@@ -31,7 +31,10 @@ def parse(commands, package, opt):
 
     for i, c in enumerate(commands):
         for s in variables:
-            commands[i] = commands[i].replace(f"%{s}", variables[s])
+            # Sometimes, I feel really sad and null-out values
+            # that I really shouldn't
+            if s is not None:
+                commands[i] = commands[i].replace(f"%{s}", variables[s])
     return commands
 
 
