@@ -33,7 +33,7 @@ def parse(commands, package, opt):
         for s in variables:
             # Sometimes, I feel really sad and null-out values
             # that I really shouldn't
-            if s is not None:
+            if variables[s] is not None:
                 commands[i] = commands[i].replace(f"%{s}", variables[s])
     return commands
 
