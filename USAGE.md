@@ -99,3 +99,4 @@ In every command that is ran, you can expect that the current directory will be 
 - `%SYSROOT`: The system root specified on the header.
 - `%PROJECT_SOURCE_DIR`: The directory where `pkgr` was called from.
 - `%THIS_DIR`: Points to the current package's source directory
+- `%BUILD_DIR`: Points to the current package's build directory (if it exists, otherwise points to the same value as `%THIS_DIR`)

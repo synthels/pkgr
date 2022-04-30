@@ -25,6 +25,7 @@ def parse(commands, package, opt):
         "PREFIX": opt["prefix"],
         "SYSROOT": opt["sysroot"],
         "THIS_DIR": package["source_dir"],
+        "BUILD_DIR": package["build_dir"],
         "PROJECT_SOURCE_DIR": opt["project_dir"]
     }
 
@@ -37,7 +38,7 @@ def parse(commands, package, opt):
 def execute_command(package, args, opt):
     """Execute command after parsing it"""
     parsed = parse(args, package, opt)
-    return subprocess.call(" ".join(parsed), shell=True)
+    return os.system(" ".join(parsed))
 
 
 def get_package_cloned_at_directory(package, opt):

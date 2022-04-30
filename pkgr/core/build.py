@@ -37,9 +37,11 @@ def install_package(package, opt):
             # where the installed package resides
             cwd = os.getcwd()
             build_dir = util.get_package_directory(package, opt)
+            package["build_dir"] = build_dir
             if "separate" in package:
                 if package["separate"]:
-                    build_dir = create_build_directory(package, opt)
+                    dirloc = create_build_directory(package, opt)
+                    build_dir, package["build_dir"] = [dirloc] * 2
 
             os.chdir(build_dir)
             for stage in stages:
